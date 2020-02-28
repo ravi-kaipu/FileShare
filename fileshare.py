@@ -17,7 +17,9 @@ try:
 except ImportError:  # Python 3
     import tkinter as Tkinter
     import tkinter.ttk as ttk
+    
 PORT = 8010
+app_dir = os.path.join(os.path.expanduser("~"), ".filesharing")
 
 class CustomedServer(http.server.SimpleHTTPRequestHandler):
     def extract_params(self, st, params = {}):
@@ -96,9 +98,9 @@ class CustomedServer(http.server.SimpleHTTPRequestHandler):
             return
     
 class MyServer(CustomedServer):
-    friendlistfile = os.path.join(os.path.join(os.path.expanduser("~"), ".filesharing"), ".userinfo.json")
-    sharedinfofile = os.path.join(os.path.join(os.path.expanduser("~"), ".filesharing"), ".sharedinfo.json")
-    notificationfile = os.path.join(os.path.join(os.path.expanduser("~"), ".filesharing"), ".notifications.json")
+    friendlistfile = os.path.join(app_dir, ".userinfo.json")
+    sharedinfofile = os.path.join(app_dir, ".sharedinfo.json")
+    notificationfile = os.path.join(app_dir, ".notifications.json")
 
     def handle_client_request(self, request):
         """
@@ -879,7 +881,7 @@ class Application(tk.Tk, MyServer):
             self.frames[F] = frame
 
         self.show_frame(LoginWindow)
-        os.makedirs(os.path.join(os.path.expanduser("~"), ".filesharing"), exist_ok=True)
+        os.makedirs(app_dir, exist_ok=True)
 
     def show_frame(self, cont):
         frame = self.frames[cont]
@@ -908,6 +910,4 @@ class Application(tk.Tk, MyServer):
 
 if __name__ == "__main__":
     app = Application(height=550, width=950)
-    app['bg'] = '#49A'
-
     app.run()
