@@ -1,7 +1,6 @@
 import http.server
 import socketserver
 import os
-from datetime import datetime
 import tkinter as tk
 import tkinter.filedialog
 import socket
@@ -17,7 +16,9 @@ try:
 except ImportError:  # Python 3
     import tkinter as Tkinter
     import tkinter.ttk as ttk
-    
+
+from datetime import datetime
+
 PORT = 8010
 app_dir = os.path.join(os.path.expanduser("~"), ".filesharing")
 
@@ -33,7 +34,6 @@ class CustomedServer(http.server.SimpleHTTPRequestHandler):
             else:
                 k, v = word.split("=")
                 params[k] = v
-
         return params
 
     def _set_headers(self):
